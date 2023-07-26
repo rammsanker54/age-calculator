@@ -1,255 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Age Calculator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/4.7.14/js/bootstrap-datetimepicker.min.js">
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
-       <style>
-        .group {
- position: relative;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
 
-.input {
- font-size: 16px;
- padding: 10px 10px 10px 5px;
- display: block;
- width: 200px;
- border: none;
- border-bottom: 1px solid #515151;
- background: transparent;
-}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+  <link rel=”stylesheet”
+    href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css”>
+  <style>
+    .group {
+      position: relative;
+    }
 
-.input:focus {
- outline: none;
-}
+    .input {
+      font-size: 16px;
+      padding: 10px 10px 10px 5px;
+      display: block;
+      width: 200px;
+      border: none;
+      border-bottom: 1px solid #515151;
+      background: transparent;
+    }
 
-label {
- color: #999;
- font-size: 18px;
- font-weight: normal;
- position: absolute;
- pointer-events: none;
- left: 5px;
- top: 10px;
- transition: 0.2s ease all;
- -moz-transition: 0.2s ease all;
- -webkit-transition: 0.2s ease all;
-}
+    .input:focus {
+      outline: none;
+    }
 
-.input:focus ~ label, .input:valid ~ label {
- top: -20px;
- font-size: 14px;
- color: #5264AE;
-}
+    label {
+      color: #999;
+      font-size: 18px;
+      font-weight: normal;
+      position: absolute;
+      pointer-events: none;
+      left: 5px;
+      top: 10px;
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+    }
 
-.bar {
- position: relative;
- display: block;
- width: 200px;
-}
+    .input:focus~label,
+    .input:valid~label {
+      top: -20px;
+      font-size: 14px;
+      color: #5264AE;
+    }
 
-.bar:before, .bar:after {
- content: '';
- height: 2px;
- width: 0;
- bottom: 1px;
- position: absolute;
- background: #5264AE;
- transition: 0.2s ease all;
- -moz-transition: 0.2s ease all;
- -webkit-transition: 0.2s ease all;
-}
+    .bar {
+      position: relative;
+      display: block;
+      width: 200px;
+    }
 
-.bar:before {
- left: 50%;
-}
+    .bar:before,
+    .bar:after {
+      content: '';
+      height: 2px;
+      width: 0;
+      bottom: 1px;
+      position: absolute;
+      background: #5264AE;
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+    }
 
-.bar:after {
- right: 50%;
-}
+    .bar:before {
+      left: 50%;
+    }
 
-.input:focus ~ .bar:before, .input:focus ~ .bar:after {
- width: 50%;
-}
+    .bar:after {
+      right: 50%;
+    }
 
-.highlight {
- position: absolute;
- height: 60%;
- width: 100px;
- top: 25%;
- left: 0;
- pointer-events: none;
- opacity: 0.5;
-}
+    .input:focus~.bar:before,
+    .input:focus~.bar:after {
+      width: 50%;
+    }
 
-.input:focus ~ .highlight {
- animation: inputHighlighter 0.3s ease;
-}
+    .highlight {
+      position: absolute;
+      height: 60%;
+      width: 100px;
+      top: 25%;
+      left: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
 
-@keyframes inputHighlighter {
- from {
-  background: #4c6be9;
- }
+    .input:focus~.highlight {
+      animation: inputHighlighter 0.3s ease;
+    }
 
- to {
-  width: 0;
-  background: transparent;
- }
-}
-       </style>
+    @keyframes inputHighlighter {
+      from {
+        background: #4c6be9;
+      }
+
+      to {
+        width: 0;
+        background: transparent;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container " style="background-color: rgb(216, 212, 212);padding: 10px;">
-        <nav class="navbar bg-body-tertiary">
-            <div class="container-fluid">
-              <span class="navbar-brand mb-0 h1">Calculate Your Age</span>
-            </div>
-          </nav>
-        
-        <div id="carouselExample" class="carousel slide">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="images/23.png" class="d-block w-100" style="max-width: 100%;" alt="...">
-              </div>
-          </div>
-        <div class="card ">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-4 mb-3 mb-sm-4 lg-12">
-                            <h3 class="card-title"> Your Age</h3>
-                            <div class='input-group date'>
-                                <input type='text' class="form-control picker" id="date" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 mb-3 mb-sm-4 lg-12">
-                            <h3 class="card-title"> Today</h3>
-                            <div class='input-group date'>
-                                <input type='text' class="form-control picker" id="currentdate" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                            </div>
-                        </div>
-                    </div>
-                        <div class="row">
-                            <div class="col-sm-4 mb-3 mb-sm-4 lg-12">
-                                <div class="mt-2" style="margin-top: 10px; padding: 5px;">
-                                    <a href="#" onclick="reset()" class="btn btn-danger ">Reset</a>
-                                    <a href="#" onclick="getdate()" class="btn btn-danger ">Calculate</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="alert alert-danger text-center" id="showalert" role="alert" style="display: none;">
-                          </div>
-                          <div class="card " style="max-width: 100%;display: none;background-color: rgb(255, 233, 233);padding: 5px;"id="showdiv">
-                            <div class="row g-0">
-                              <div class="col-md-4">
-                                <img src="images/download.jpg" class="img-fluid rounded-start" alt="...">
-                              </div>
-                              <div class="col-md-8">
-                                <div class="card-body">
-                                  <p class="text-danger" style="font-size: xx-large;justify-content: center;" id="printage"></p>
-                                  <p class=" text-danger" style="font-size: x-large;justify-content: center;">Every day is a good day. There is something to learn, care and celebrate.</p>
-                                  <div class="group">
-                                    <input  type="text" class="input" id="insertdata" readonly>
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label></label>
-                                  </div>  
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row" style="max-width: 100%;margin: 5x;">
-                            <div class="col-sm-12 mb-12 mb-sm-12 lg-12">
-                                <h5>ABOUT AGE CALCULATOR</h5>
-                                <hr>
-                            <p>
-                                Age calculator is an online tool with which you can find out your age using your date of birth and the current date. The tool helps to find out the difference in time between two dates. The result is displayed in years, months, weeks, and days. The results are also not affected by the time zone of a person since the tool just tells you the difference in time. The age calculator is based on the common age system, therefore it can be used by everyone.
-                              </p>
-                          </div>
-                        </div>
-                </div>
-            </div>
+  <div class="container " style="background-color: rgb(216, 212, 212);padding: 10px;">
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Calculate Your Age</span>
+      </div>
+    </nav>
+
+    <div id="carouselExample" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="images/23.png" class="d-block w-100" style="max-width: 100%;" alt="...">
         </div>
+      </div>
+      <div class="card ">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-4 mb-3 mb-sm-4 lg-12">
+              <h3 class="card-title"> Your DoB</h3>
+              <div class='input-group date'>
+                <input type='text' class="form-control picker" id="date" />
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+              </div>
+            </div>
+            <div class="col-sm-4 mb-3 mb-sm-4 lg-12">
+              <h3 class="card-title"> Today</h3>
+              <div class='input-group date'>
+                <input type='text' class="form-control picker" id="currentdate" />
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 mb-3 mb-sm-4 lg-12">
+              <div class="mt-2" style="margin-top: 10px; padding: 5px;">
+                <a href="#" onclick="reset()" class="btn btn-danger ">Reset</a>
+                <a href="#" onclick="getdate()" class="btn btn-danger ">Calculate</a>
+
+                <div class="input-group date" data-provide="datepicker">
+                  <input type="text" class="form-control">
+                  <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="alert alert-danger text-center" id="showalert" role="alert" style="display: none;">
+          </div>
+          <div class="card " style="max-width: 100%;display: none;background-color: rgb(255, 233, 233);padding: 5px;"
+            id="showdiv">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="images/download.jpg" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <p class="text-danger" style="font-size: xx-large;justify-content: center;" id="printage"></p>
+                  <p class=" text-danger" style="font-size: x-large;justify-content: center;">Every day is a good day.
+                    There is something to learn, care and celebrate.</p>
+                  <div class="group">
+                    <input type="text" class="input" id="insertdata" readonly>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="max-width: 100%;margin: 5x;">
+            <div class="col-sm-12 mb-12 mb-sm-12 lg-12">
+              <h5>ABOUT AGE CALCULATOR</h5>
+              <hr>
+              <p>
+                Age calculator is an online tool with which you can find out your age using your date of birth and the
+                current date. The tool helps to find out the difference in time between two dates. The result is
+                displayed in years, months, and days. The results are also not affected by the time zone of a
+                person since the tool just tells you the difference in time. The age calculator is based on the common
+                age system, therefore it can be used by everyone.
+              </p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        // Datepicker initialization
+        $('.datepicker').datepicker({
+          format: 'yyyy-mm-dd', // Date format you want (you can change it to your preferred format)
+          autoclose: true // Close the datepicker when a date is selected
+          // You can add more options as per your requirement
+        });
+      });
+    </script>
+
+    <script>
+      const today = new Date();
+      var todayDate = today.toISOString().split('T')[0]
+      $('#currentdate').val(todayDate);
 
 
-        <script>
-                const today = new Date();
-                var todayDate = today.toISOString().split('T')[0]
-                $('#currentdate').val(todayDate);
+      $(function () {
+        $('.picker').datepicker();
+      });
+      function getdate() {
+        const dobInput = document.getElementById('date');
+        const dob = new Date(dobInput.value);
+        const today = new Date();
 
-   
-            $(function () {
-                $('.picker').datepicker();
-            });
-            function getdate() {
-                const dobInput = document.getElementById('date');
-                const dob = new Date(dobInput.value);
-                const today = new Date();
-              
-                var todayDate = today.toISOString().split('T')[0]
+        var todayDate = today.toISOString().split('T')[0]
 
-                if (isNaN(dob)) {
+        if (isNaN(dob)) {
 
-                     $('#showalert').show();
-                     $('#showalert').html("Please enter a valid date of birth!");
+          $('#showalert').show();
+          $('#showalert').html("Please enter a valid date of birth!");
 
-                }
-                else{
-                const ageInMilliseconds = today - dob;
-                const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
-                const ageInDays= ageInMilliseconds / (1000 * 60 * 60 * 24);
-                const ageInMonths= ageInMilliseconds / (1000 * 60 * 60 * 24 * 30);
-                const age = Math.floor(ageInYears);
-                const ageday= Math.floor(ageInDays);
-                const ageMonaths= Math.floor(ageInMonths);
-                
-                // currentdate
-                $('#currentdate').val(todayDate);
-                $('#printage').html("Hi buddy you are "+ age + " year's old");
-                $('#insertdata').val(  ageMonaths + " - Months"+ " "  + ageday + " - Days");
-                $('#showdiv').show();
-                $('#showalert').hide();
-                }
-                if(ageMonaths == 0){
-                    $('#printage').hide();
+        }
+        else {
+          const ageInMilliseconds = today - dob;
+          const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
+          const ageInDays = ageInMilliseconds / (1000 * 60 * 60 * 24);
+          const ageInMonths = ageInMilliseconds / (1000 * 60 * 60 * 24 * 30);
+          const age = Math.floor(ageInYears);
+          const ageday = Math.floor(ageInDays);
+          const ageMonaths = Math.floor(ageInMonths);
 
-                }
-            };
-            function reset() {
-                $('#date').val('');
-                $('#showdiv').hide();
+          // currentdate
+          $('#currentdate').val(todayDate);
+          $('#printage').html("Hi buddy you are " + age + " year's old");
+          $('#insertdata').val(ageMonaths + " - Months" + " " + ageday + " - Days");
+          $('#showdiv').show();
+          $('#showalert').hide();
+        }
+        if (ageMonaths == 0) {
+          $('#printage').hide();
 
-            }
-        </script>
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-       <!-- Bootstrap Datepicker JavaScript -->
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-     
-       <!-- Custom JavaScript -->
-       <script>
-         $(document).ready(function() {
-           // Initialize the datepicker
-           $('#datepicker').datepicker({
-             format: 'yyyy-mm-dd', // Change the format as per your requirements
-             autoclose: true,
-             todayHighlight: true,
-           });
-         });
-       </script>
+        }
+      };
+      function reset() {
+        $('#date').val('');
+        $('#showdiv').hide();
+
+      }
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $('.datepicker').datepicker();
+      });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/4.7.14/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Datepicker JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Datepicker JavaScript -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script
+      src=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js”></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+      $(document).ready(function () {
+        // Initialize the datepicker
+        $('#datepicker').datepicker({
+          format: 'yyyy-mm-dd', // Change the format as per your requirements
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    </script>
 
 </body>
 
